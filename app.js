@@ -8,8 +8,11 @@ var logger = require('morgan');
 var bodyParser= require('body-parser');
 var mongoose= require('mongoose');
 const db = mongoose.connection;
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var moviesRouter= require('./routes/movies');
+
 
 var app = express();
 
@@ -36,8 +39,12 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+//Routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/api/movies',moviesRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -56,3 +63,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
