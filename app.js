@@ -1,14 +1,29 @@
+
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser= require('body-parser');
-
+var mongoose= require('mongoose');
+const db = mongoose.connection;
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+//DataBase setup;
+const dbUri='mongodb://'+process.env.DB_USER+':'+process.env.DB_PASSWORD+'@'+process.env.DB_HOST+':'+process.env.DB_PORT+'/'+process.env.DB_NAME;
+console.log(dbUri);
+mongoose.connect(dbUri,{useNewUrlParser: true,useUnifiedTopology: true});
+
+db.on('error', console.error.bind(console, 'connection error:'));
+
+db.once('open',  ()=> { 
+  console.log('Database connected');
+});
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
