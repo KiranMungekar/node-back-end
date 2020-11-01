@@ -61,7 +61,7 @@ module.exports.removeMovie = async (id)=>{
        const removedMovie= await MovieSchema.findByIdAndDelete(new ObjectId(id));
        return {
            err:false,
-           movie:removedMovie.get('name')
+           msg:removedMovie.get('name')+' deleted!'
        }
     }catch(err){
         return{
@@ -128,7 +128,7 @@ manageFilters=({name,rating,direactor,genre})=>{
    
 
     if(name != undefined && name != ''){
-        query['$and'].push({"name":{$regex:new RegExp(name)}})
+        query['$and'].push({"name":{$regex:new RegExp("^"+name,'gi')}})
     }
     if(rating != undefined){
         query['$and'].push({'imdb_score':{$gt:rating}})

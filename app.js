@@ -8,15 +8,18 @@ var logger = require('morgan');
 var bodyParser= require('body-parser');
 var mongoose= require('mongoose');
 var cors= require('cors');
+var passport= require('passport');
+var app = express();
+
+//require('./config/passport-config');
+
 const db = mongoose.connection;
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var moviesRouter= require('./routes/movies');
 
 
-var app = express();
+
 app.use(cors())
+
 
 //DataBase setup;
 const dbUri='mongodb://'+process.env.DB_USER+':'+process.env.DB_PASSWORD+'@'+process.env.DB_HOST+':'+process.env.DB_PORT+'/'+process.env.DB_NAME;
@@ -28,6 +31,14 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open',  ()=> { 
   console.log('Database connected');
 });
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+var moviesRouter= require('./routes/movies');
 
 
 // view engine setup
@@ -44,9 +55,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Routes
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+//app.use('/api', usersRouter);
 app.use('/api/movies',moviesRouter);
 
+//app.get('/api/auth/google',passport.authenticate('google'), {scope:['profile','email']});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -4,16 +4,16 @@ var router = express.Router();
 var moviesService= require('../services/moviesService');
 
 /* GET Movies listing. */
-// router.get('/', async (req, res, next) => {
-//    try{
-//        console.log(req.query)
-//     const movies= await moviesService.getMovies();
-//     res.send({data: {moviesList:movies, err: false}});
-//    }catch(err){
-//         console.log(err);
-//         res.status(500).send({data:{err:true}});
-//    }
-// });
+router.get('/all', async (req, res, next) => {
+   try{
+       console.log(req.query)
+    const movies= await moviesService.getMovies();
+    res.send({data: {moviesList:movies, err: false}});
+   }catch(err){
+        console.log(err);
+        res.status(500).send({data:{err:true}});
+   }
+});
 
 
 router.get('/', async (req, res, next) => {
@@ -56,7 +56,7 @@ router.put('/', async (req, res, next) => {
 router.delete('/', async (req, res, next) => {
     try{
         console.log(req.query)
-        const movies= await moviesService.removeMovie(req.body.id);
+        const movies= await moviesService.removeMovie(req.query.id);
         res.json({data: {movie:movies}}).status(200);
     }catch(err){
          console.log(err);
