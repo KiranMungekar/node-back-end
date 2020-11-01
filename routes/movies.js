@@ -3,17 +3,67 @@ var router = express.Router();
 
 var moviesService= require('../services/moviesService');
 
-/* GET users listing. */
+/* GET Movies listing. */
+// router.get('/', async (req, res, next) => {
+//    try{
+//        console.log(req.query)
+//     const movies= await moviesService.getMovies();
+//     res.send({data: {moviesList:movies, err: false}});
+//    }catch(err){
+//         console.log(err);
+//         res.status(500).send({data:{err:true}});
+//    }
+// });
+
+
 router.get('/', async (req, res, next) => {
-   try{
-       console.log(req.query)
-    const movies= await moviesService.getMovies();
-    res.send({data: {moviesList:movies, err: false}});
-   }catch(err){
-        console.log(err);
-        res.status(500).send({data:{err:true}});
-   }
+    try{
+        console.log(req.query)
+        const movies= await moviesService.getMovie(req.query.id)
+        res.json({data: movies}).status(200);
+    }catch(err){
+         console.log(err);
+         res.status(500).send({data:{err:true}});
+    }
 });
+
+
+router.post('/', async (req, res, next) => {
+    try{
+        console.log(req.query)
+        const movies= await moviesService.addMovie(req.body);
+        res.json({data: {movie:movies}}).status(200);
+    }catch(err){
+         console.log(err);
+         res.status(500).send({data:{err:true}});
+    }
+ });
+
+ 
+router.put('/', async (req, res, next) => {
+    try{
+        console.log(req.query)
+        const movies= await moviesService.updateMovie(req.body);
+        res.json({data: {movie:movies}}).status(200);
+    }catch(err){
+         console.log(err);
+         res.status(500).send({data:{err:true}});
+    }
+ });
+
+
+ 
+router.delete('/', async (req, res, next) => {
+    try{
+        console.log(req.query)
+        const movies= await moviesService.removeMovie(req.body.id);
+        res.json({data: {movie:movies}}).status(200);
+    }catch(err){
+         console.log(err);
+         res.status(500).send({data:{err:true}});
+    }
+ });
+
 
 
 router.post('/browse', async (req,res,next)=>{
