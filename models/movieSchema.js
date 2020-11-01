@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var movieSchema= mongoose.Schema({    
+    _id:mongoose.Schema.ObjectId,
     popularity:{ type: Number, default:0.0 ,required: true, min: [0],max: 100.0},
     director:{type:String ,required: true,},
     genre:{type:[String], required:true},

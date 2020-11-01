@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser= require('body-parser');
 var mongoose= require('mongoose');
+var cors= require('cors');
 const db = mongoose.connection;
 
 var indexRouter = require('./routes/index');
@@ -15,6 +16,7 @@ var moviesRouter= require('./routes/movies');
 
 
 var app = express();
+app.use(cors())
 
 //DataBase setup;
 const dbUri='mongodb://'+process.env.DB_USER+':'+process.env.DB_PASSWORD+'@'+process.env.DB_HOST+':'+process.env.DB_PORT+'/'+process.env.DB_NAME;
