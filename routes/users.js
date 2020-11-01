@@ -1,12 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
-const passport= require('passport');
+//var userService =require('../schema/users/user.service');
+const userService =require('../schema/users/user.service');
 
 /* GET users listing. */
-// router.get('/google', 
-//           passport.authenticate('google',{
-//           scope:['profile','email']
-// }));
+router.get('/getUser', userService.retrieveToken, userService.verifyToken, function(req, res, next) {
+    console.log(req.user);
+    res.send({'account': req.user});
+
+});
 
 module.exports = router;
