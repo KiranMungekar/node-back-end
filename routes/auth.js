@@ -2,7 +2,7 @@
 const router= require('express').Router();
 
 //DB services
-const userService =require('../schema/users/user.service');
+const userService =require('../services/user.service');
 
 
     /// API ROUTES
@@ -81,15 +81,15 @@ const userService =require('../schema/users/user.service');
         try{
             const isUserPresent= await userService.verifyUserEmail(newUser);
             if(isUserPresent.err){
-                return isUserPresent;
-            }else{
-                console.log(newUser);
+                //console.log(newUser);
                 const res= await userService.addNewUser(newUser);  
                 console.log(res);
                 return {
                     err:false,
                     data:res
                 };
+            }else{
+                return isUserPresent;
             }
            
         }catch(err){

@@ -1,4 +1,4 @@
-const UserSchema= require('./UserSchema');
+const UserSchema= require('../models/UserSchema');
 const mongoose = require('mongoose');
 
 
@@ -12,15 +12,14 @@ module.exports.addNewUser= async (newUser)=>{
         _id: new mongoose.Types.ObjectId(),
         name: newUser.name,
         email: newUser.email,
-        password: hashedPassword,
-        phone: newUser.phone,
+        password: hashedPassword
     })
     return user.save();   
     
 };
 
 module.exports.verifyUserEmail = async ({email})=>{
-   var query= UserSchema.where({'email':email});
+   var query= UserSchema.find({'email':email});
    var user = await query.exec();
     console.log(user);
     if(user.length == 0){

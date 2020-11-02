@@ -8,20 +8,17 @@ var logger = require('morgan');
 var bodyParser= require('body-parser');
 var mongoose= require('mongoose');
 var cors= require('cors');
-var passport= require('passport');
 var app = express();
 
 //require('./config/passport-config');
 
 const db = mongoose.connection;
 
-
-
-
 app.use(cors())
 
 
-//DataBase setup;
+//DataBase setup ;
+//const dbUri='mongodb+srv://'+process.env.DB_USER+':'+process.env.DB_PASSWORD+'@'+process.env.DB_HOST+'/'+process.env.DB_NAME;
 const dbUri='mongodb://'+process.env.DB_USER+':'+process.env.DB_PASSWORD+'@'+process.env.DB_HOST+':'+process.env.DB_PORT+'/'+process.env.DB_NAME;
 console.log(dbUri);
 mongoose.connect(dbUri,{useNewUrlParser: true,useUnifiedTopology: true});
@@ -33,15 +30,11 @@ db.once('open',  ()=> {
 });
 
 
-app.use(passport.initialize());
-app.use(passport.session());
 
-var indexRouter = require('./routes/index')(app);
-
-
+var indexRouter = require('./routes/index');
 var usersRouter=require('./routes/users');
 var moviesRouter= require('./routes/movies');
-var authRouter= require('./routes/auth')(app);
+var authRouter= require('./routes/auth');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
