@@ -32,6 +32,7 @@ db.once('open',  ()=> {
 
 
 var indexRouter = require('./routes/index');
+var libraryRouter= require('./routes/library');
 var usersRouter=require('./routes/users');
 var moviesRouter= require('./routes/movies');
 var authRouter= require('./routes/auth');
@@ -50,9 +51,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Routes
 app.use('/', indexRouter);
-app.use('/api', usersRouter);
-app.use('/api/movies',moviesRouter);
-app.use('/api/auth',authRouter)
+app.use('/api/library', libraryRouter)
+//app.use('/api', usersRouter);
+//app.use('/api/movies',moviesRouter);
+//app.use('/api/auth',authRouter)
 
 //app.get('/api/auth/google',passport.authenticate('google'), {scope:['profile','email']});
 
